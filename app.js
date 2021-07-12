@@ -24,7 +24,9 @@ app.get('/quickpicks', (req, res) => {
         }
     }
 
-    res.json(musicResult)
+    res.json({
+        "items": musicResult
+    })
 })
 
 app.listen(PORT, () => {
