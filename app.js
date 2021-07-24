@@ -16,8 +16,9 @@ app.get('/', (req, res) => {
 
 app.get('/createJson', async (req, res) => {
     const playlistId = req.query.source
+    const key = req.query.key
 
-    const jsonResult = await createJson(playlistId)
+    const jsonResult = await createJson(playlistId, key)
 
     res.json(jsonResult)
 })

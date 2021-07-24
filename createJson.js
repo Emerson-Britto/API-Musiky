@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const getListFromYT = async (idsTotalResult) => {
+const getListFromYT = async (idsTotalResult, key) => {
 	var totalToSearch = idsTotalResult.length;
 	var musicTotalResult =[];
     var listToSearch =[];
@@ -15,7 +15,7 @@ const getListFromYT = async (idsTotalResult) => {
 		    	totalToSearch = totalToSearch - listToSearch.length;
 
 				var ids = listToSearch.join('%2C')
-				var { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids}&key=AIzaSyDmGmPsa0KCP5qnHrQi384--tEvrj5u-0g`)
+				var { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids}&key=${key}`)
 			    data.items.forEach(music => {
 			        musicTotalResult.push(music);
 			    })
@@ -24,7 +24,7 @@ const getListFromYT = async (idsTotalResult) => {
 		    }
     	}
 		var ids = listToSearch.join('%2C')
-		var { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids}&key=AIzaSyDmGmPsa0KCP5qnHrQi384--tEvrj5u-0g`)
+		var { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids}&key=${key}`)
 	    data.items.forEach(music => {
 	        musicTotalResult.push(music);
 	    })
@@ -44,20 +44,20 @@ const getListFromYT = async (idsTotalResult) => {
     }
 }
 
-const createJson = async (playlistId) => {
+const createJson = async (playlistId, key) => {
 	var nextPag = true;
 	var nextPagToken ='';
 	var idsTotalResult = [];
 
 	while(nextPag){
 
-		const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=999${nextPagToken}&playlistId=${playlistId}&key=AIzaSyDmGmPsa0KCP5qnHrQi384--tEvrj5u-0g`)
+		const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=999${nextPagToken}&playlistId=${playlistId}&key=${key}`)
         data.items.forEach(music => {
 	        idsTotalResult.push(music.snippet.resourceId.videoId);
         })
 
 		if (idsTotalResult.length == parseInt(data.pageInfo.totalResults)){
-			return await getListFromYT(idsTotalResult)
+			return await getListFromYT(idsTotalResult, key)
 		}
 		nextPagToken = `&pageToken=${data.nextPageToken}`
 	}
