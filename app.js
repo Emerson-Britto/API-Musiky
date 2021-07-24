@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 
-const data_quick = require("./dataQuick");
+const RandomSongs = require('./randomSongs.js')
+const createJson = require('./createJson.js')
 
 const PORT = process.env.PORT || 8877;
 
@@ -13,20 +14,21 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/quickpicks', (req, res) => {
-    var numed = [], musicResult = [];
-    for (var i = 0; i < 9; i++) {
-        var numRandom = Math.floor(Math.random() * data_quick.items.length);
-        var hasSomeEvenNumber = numed.some(value => value == numRandom);
-        if (hasSomeEvenNumber == false) {
-            numed.push(numRandom);
-            musicResult.push(data_quick.items[numRandom]);
-        }
-    }
+app.get('/createJson', async (req, res) => {
+    const playlistId = req.query.source
 
-    res.json({
-        "items": musicResult
-    })
+    const jsonResult = await createJson(playlistId)
+
+    res.json(jsonResult)
+})
+
+app.get('/RandomSongs', async (req, res) => {
+    const totalList = req.query.totalList
+    const resultPerList = req.query.resultPerList
+
+    const ResultSongs = await RandomSongs(parseInt(totalList), parseInt(resultPerList))
+
+    res.json(ResultSongs)
 })
 
 app.listen(PORT, () => {
