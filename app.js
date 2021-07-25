@@ -28,6 +28,8 @@ app.get('/RandomSongs', async (req, res) => {
 
     const ResultSongs = await RandomSongs(parseInt(totalResult))
 
+    res.header('Access-Control-Allow-Origin', '*')
+
     res.json(ResultSongs)
 })
 
