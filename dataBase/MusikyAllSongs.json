@@ -2230,6 +2230,43 @@
             }
         },
         "contentDetails": {
+            "duration": "3:36",nition": "hd",
+            "caption": "false",
+            "licensedContent": false,
+            "contentRating": {},
+            "projection": "rectangular"
+        }
+    },
+    {
+        "id": "tgY7eVQsJhI",
+        "snippet": {
+            "channelId": "UCQfS0qTkIwn_4eNRzJqtmeg",
+            "title": "Dark Horse - Katy Perry (Lyrics) [Lyrical Madness Release]",
+            "thumbnails": {
+                "default": {
+                    "url": "https://i.ytimg.com/vi/tgY7eVQsJhI/default.jpg",
+                    "width": 120,
+                    "height": 90
+                },
+                "medium": {
+                    "url": "https://i.ytimg.com/vi/tgY7eVQsJhI/mqdefault.jpg",
+                    "width": 320,
+                    "height": 180
+                },
+                "maxres": {
+                    "url": "https://i.ytimg.com/vi/tgY7eVQsJhI/maxresdefault.jpg",
+                    "width": 1280,
+                    "height": 720
+                }
+            },
+            "channelTitle": "Lyrical Madness",
+            "categoryId": "10",
+            "liveBroadcastContent": "none",
+            "localized": {
+                "title": "Dark Horse - Katy Perry (Lyrics) [Lyrical Madness Release]"
+            }
+        },
+        "contentDetails": {
             "duration": "3:36",
             "dimension": "2d",
             "definition": "hd",
