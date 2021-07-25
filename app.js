@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 
-const RandomSongs = require('./randomSongs.js')
-const createJson = require('./createJson.js')
+const RandomSongs = require('./path/randomSongs.js')
+const createJson = require('./adminTools/createJson.js')
 
 const PORT = process.env.PORT || 8877;
 
@@ -24,10 +24,9 @@ app.get('/createJson', async (req, res) => {
 })
 
 app.get('/RandomSongs', async (req, res) => {
-    const totalList = req.query.totalList
-    const resultPerList = req.query.resultPerList
+    const totalResult = req.query.totalResult
 
-    const ResultSongs = await RandomSongs(parseInt(totalList), parseInt(resultPerList))
+    const ResultSongs = await RandomSongs(parseInt(totalResult))
 
     res.json(ResultSongs)
 })
