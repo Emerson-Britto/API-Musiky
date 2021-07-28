@@ -7,11 +7,14 @@ const unBalanced = (totalPerList) => {
 }
 
 const generatorMixs = (totalPlayList, totalPerList) => {
+	var playListsOject = {};
 	var playLists = [];
+	var resumePLaylists = [];
 	var alreadyAdded = [];
 
 	while(Object.keys(playLists).length != totalPlayList){
 		let playList = {};
+		var resumePLaylist = {};
 		let musicList = [];
 
 		let numRandom = ~~(Math.random() * 12);
@@ -32,9 +35,19 @@ const generatorMixs = (totalPlayList, totalPerList) => {
 		playList['playListTitle'] = name;
 		playList['totalMusic'] = musicList.length;
 		playList['musicList'] = musicList;
-		playLists.push(playList);
+
+		resumePLaylist['playListImg'] = img;
+		resumePLaylist['playListTitle'] = name;
+		resumePLaylist['totalMusic'] = musicList.length;
+		resumePLaylist['indexInListDetails'] = resumePLaylists.length;
+		resumePLaylists.push(resumePLaylist);
+		playLists.push(playList)
 	}
-	return playLists;
+
+	playListsOject['playListResume'] = resumePLaylists
+	playListsOject['playListDetails'] = playLists;
+
+	return playListsOject;
 }
 
 module.exports = generatorMixs
