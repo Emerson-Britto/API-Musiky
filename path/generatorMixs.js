@@ -23,11 +23,8 @@ const generatorMixs = (totalPlayList, totalPerList) => {
 	var playLists = {};
 	var resumePLaylists = [];
 	var alreadyAdded = [];
-    console.log("dataBase  " + allSong.length)
 	while(Object.keys(playLists).length !== totalPlayList){
 
-		console.log('tamanho da list ' + Object.keys(playLists).length + ' ------ ' + totalPlayList)
-		console.log("alreadyAdded " + alreadyAdded.length)
 		let playList = {};
 		let resumePLaylist = {};
 		let musicList = [];
@@ -60,8 +57,6 @@ const generatorMixs = (totalPlayList, totalPerList) => {
 		resumePLaylists.push(resumePLaylist);
 		playLists[`mix${Object.keys(playLists).length +1}msk`] = playList
 	}
-	console.log("alreadyAdded " + alreadyAdded.length)
-	console.log('tamanho da list ' + Object.keys(playLists).length + ' ------ ' + totalPlayList)
 
 	playListsOject['playListResume'] = resumePLaylists
 	playListsOject['playListDetails'] = playLists;
