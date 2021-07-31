@@ -1,12 +1,11 @@
 const allSong = require('../dataBase/MusikyAllSongs');
 
-const selectRandomImg = () => {
-	var alreadyAdded = [];
+const selectRandomImg = (imagemAdded) => {
 	while(true){
         let numRandom = ~~(Math.random() * 12);
-        let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
+        let hasSomeEvenNumber = imagemAdded.some(value => value == numRandom);
         if (!hasSomeEvenNumber){
-        	alreadyAdded.push(numRandom)
+        	imagemAdded.push(numRandom)
             return `https://raw.githubusercontent.com/Emerson-Britto/API-Musiky/main/dataBase/imgs/chill/${numRandom}.jpg`
         }
 	}
@@ -23,6 +22,7 @@ const generatorMixs = (totalPlayList, totalPerList) => {
 	var playLists = {};
 	var resumePLaylists = [];
 	var alreadyAdded = [];
+	var imagemAdded = [];
 	while(Object.keys(playLists).length !== totalPlayList){
 
 		let playList = {};
@@ -30,7 +30,7 @@ const generatorMixs = (totalPlayList, totalPerList) => {
 		let musicList = [];
 
 
-		let img = selectRandomImg();
+		let img = selectRandomImg(imagemAdded);
 		let name = `Mix ${Object.keys(playLists).length +1}`;
 
 		const totalThisList = unBalanced(totalPerList);
