@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 
-const RandomSongs = require('./path/randomSongs.js')
-const generatorMixs = require('./path/generatorMixs.js')
+const randomSongs = require('./path/randomSongs.js')
 const createJson = require('./adminTools/createJson.js')
 
 const PORT = process.env.PORT || 8877;
@@ -24,26 +23,18 @@ app.get('/createJson', async (req, res) => {
     res.json(jsonResult)
 })
 
-app.get('/RandomSongs', async (req, res) => {
-    const totalResult = req.query.totalResult
-
-    const ResultSongs = await RandomSongs(parseInt(totalResult))
-
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.json(ResultSongs)
-})
-
-app.get('/mixsGenerator', async (req, res) => {
-    const totalPlayList = req.query.totalPlayList
+app.get('/randomSongs', async (req, res) => {
+    const totalList = req.query.totalList
     const totalPerList = req.query.totalPerList
+    const valueExactPerList = req.query.valueExact
 
-    const ResultSongs = await generatorMixs(parseInt(totalPlayList), parseInt(totalPerList))
+    const resultSongs = await randomSongs(parseInt(totalList), parseInt(totalPerList), valueExactPerList)
 
     res.header('Access-Control-Allow-Origin', '*')
 
-    res.json(ResultSongs)
+    res.json(resultSongs)
 })
+
 
 app.listen(PORT, () => {
     console.log('port: ' + PORT)
