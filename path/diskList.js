@@ -1,4 +1,4 @@
-const ambienceSong = require('../dataBase/playlist/long_Songs-Ambient');
+const ambienceSong = require('../dataBase/playlists/long_Songs-Ambient');
 
 const selectRandomImg = (imagemAdded) => {
     while(true){
