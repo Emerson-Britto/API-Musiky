@@ -1,4 +1,11 @@
-const allSong = require('../dataBase/MusikyAllSongs');
+const allSong0 = require('../dataBase/allSongs_Musiky_list0');
+const allSong1 = require('../dataBase/allSongs_Musiky_list1');
+const allSong2 = require('../dataBase/allSongs_Musiky_list2');
+const allSong3 = require('../dataBase/allSongs_Musiky_list3');
+
+const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
+
+//const musikyAllSong = require(`../dataBase/allSongs_Musiky_list${~~(Math.random() * 4)}`);
 
 const selectRandomImg = (imagemAdded) => {
     while(true){
@@ -39,12 +46,12 @@ const randomSongs = (totalList, totalPerList, valueExact='false') => {
         }
         
         for(let i=0; musicList.length !== totalPerList + unBalanceThisList; i++){
-            if(alreadyAdded.length === allSong.length){break}
-            let numRandom = ~~(Math.random() * allSong.length);
+            if(alreadyAdded.length === musikyAllSong.length){break}
+            let numRandom = ~~(Math.random() * musikyAllSong.length);
             let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
             if (!hasSomeEvenNumber){
                 alreadyAdded.push(numRandom)
-                musicList.push(allSong[numRandom])              
+                musicList.push(musikyAllSong[numRandom])              
             }
         }
         playList['playListImg'] = img;
