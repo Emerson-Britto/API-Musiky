@@ -41,7 +41,7 @@ app.get('/randomSongs', async (req, res) => {
 app.get('/diskList', async (req, res) => {
     const totalDisk = req.query.totalDisk
 
-    const resultSongs = await getDiskList(parseInt(totalList))
+    const resultSongs = await getDiskList(parseInt(totalDisk))
 
     res.header('Access-Control-Allow-Origin', '*')
 
