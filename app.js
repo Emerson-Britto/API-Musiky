@@ -26,9 +26,10 @@ app.get('/createJson', async (req, res) => {
 app.get('/randomSongs', async (req, res) => {
     const totalList = req.query.totalList
     const totalPerList = req.query.totalPerList
+    const listPrefix = req.query.listPrefix
     const valueExactPerList = req.query.valueExact
 
-    const resultSongs = await randomSongs(parseInt(totalList), parseInt(totalPerList), valueExactPerList)
+    const resultSongs = await randomSongs(parseInt(totalList), parseInt(totalPerList), listPrefix, valueExactPerList)
 
     res.header('Access-Control-Allow-Origin', '*')
 

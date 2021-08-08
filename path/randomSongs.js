@@ -24,7 +24,7 @@ const unBalanced = (totalPerList) => {
     return numRandom - secondNumRandom;
 }
 
-const randomSongs = (totalList, totalPerList, valueExact='false') => {
+const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb-msk-mU51ky4', valueExact='false') => {
     var playListsOject = {};
     var playLists = {};
     var resumePLaylists = [];
@@ -62,10 +62,10 @@ const randomSongs = (totalList, totalPerList, valueExact='false') => {
         resumePLaylist['playListImg'] = img;
         resumePLaylist['playListTitle'] = name;
         resumePLaylist['totalMusic'] = musicList.length;
-        resumePLaylist['keyInPlaylistDetails'] = `mix${Object.keys(playLists).length +1}msk`;
+        resumePLaylist['keyInPlaylistDetails'] = `${ listPrefix + Object.keys(playLists).length+1 + listSuffix }`;
         
         resumePLaylists.push(resumePLaylist);
-        playLists[`mix${Object.keys(playLists).length +1}msk`] = playList
+        playLists[`${ listPrefix + Object.keys(playLists).length+1 + listSuffix }`] = playList
     }
 
     playListsOject['playListResume'] = resumePLaylists
