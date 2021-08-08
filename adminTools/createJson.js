@@ -3,7 +3,11 @@ const axios = require('axios');
 const setDuration = (music) => {
 	var fliter1 = music['contentDetails']['duration'].replace('PT', '');
 	filter2 = fliter1.replace(/M\dS/, ':00');
-	return filter2.replace(/M(?!\d)/, ':00').replace(/M/, ':').replace(/S/, '');
+	filter3 = filter2.replace(/M(?!\d)/, ':00').replace(/M/, ':').replace(/S/, '');
+	if(filter3.length === 4){
+		return filter3.replace(/H/, ':00:')
+	}
+	return filter3.replace(/H/, ':')
 }
 
 const getApiResult = async (listToSearch, resultNoFormat, key) => {
