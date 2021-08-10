@@ -24,6 +24,12 @@ const unBalanced = (totalPerList) => {
     return numRandom - secondNumRandom;
 }
 
+const setArtistListOnMusic = (musicTitle) => {
+    var filterMinusSign = musicTitle.split("-", 1);
+    var filterCommas = filterMinusSign.split(",");
+    return filterCommas
+}
+
 const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb-msk-mU51ky4', valueExact='false') => {
     var playListsOject = {};
     var playLists = {};
@@ -51,7 +57,10 @@ const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb
             let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
             if (!hasSomeEvenNumber){
                 alreadyAdded.push(numRandom)
-                musicList.push(musikyAllSong[numRandom])              
+                let musicWithArtistFilter = musikyAllSong[numRandom]
+                let targetTitleToFilter = musikyAllSong[numRandom].snippet.title
+                musicWithArtistFilter['Artist'] = setArtistListOnMusic(targetTitleToFilter);
+                musicList.push(musicWithFilterArtist)
             }
         }
         playList['playListImg'] = img;
