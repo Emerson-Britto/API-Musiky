@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 
-const randomSongs = require('./path/randomSongs.js')
+const randomPlaylists = require('./path/randomPlaylist.js')
 const createJson = require('./adminTools/createJson.js')
-const getDiskList = require('./path/diskList.js')
+const randomSongs = require('./path/randomSongs.js')
 
 const PORT = process.env.PORT || 8877;
 
@@ -24,24 +24,25 @@ app.get('/createJson', async (req, res) => {
     res.json(jsonResult)
 })
 
-app.get('/randomSongs', async (req, res) => {
+app.get('/randomPlaylists', async (req, res) => {
     const totalList = req.query.totalList
     const totalPerList = req.query.totalPerList
     const listPrefix = req.query.listPrefix
     const listSuffix = req.query.listSuffix
     const valueExactPerList = req.query.valueExact
 
-    const resultSongs = await randomSongs(parseInt(totalList), parseInt(totalPerList), listPrefix, listSuffix, valueExactPerList)
+    const resultSongs = await randomPlaylists(parseInt(totalList), parseInt(totalPerList), listPrefix, listSuffix, valueExactPerList)
 
     res.header('Access-Control-Allow-Origin', '*')
 
     res.json(resultSongs)
 })
 
-app.get('/diskList', async (req, res) => {
-    const totalDisk = req.query.totalDisk
+app.get('/randomSongs', async (req, res) => {
+    const totalSong = req.query.totalSong
+    const listType = req.query.listType
 
-    const resultSongs = await getDiskList(parseInt(totalDisk))
+    const resultSongs = await randomSongs(parseInt(totalSong), listType)
 
     res.header('Access-Control-Allow-Origin', '*')
 
@@ -51,3 +52,5 @@ app.get('/diskList', async (req, res) => {
 app.listen(PORT, () => {
     console.log('port: ' + PORT)
 })
+
+//https://api-musiky.herokuapp.com/createjson?source=[PLAYLIST_LINK]&key=[KEY]

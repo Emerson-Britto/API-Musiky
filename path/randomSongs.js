@@ -1,13 +1,10 @@
-const allSong0 = require('../dataBase/allSongs_Musiky_list0');
-const allSong1 = require('../dataBase/allSongs_Musiky_list1');
-const allSong2 = require('../dataBase/allSongs_Musiky_list2');
-const allSong3 = require('../dataBase/allSongs_Musiky_list3');
+const songList = {
+    ambienceSong: require('../dataBase/playlists/long_Songs-Ambient'),
+    mashupSongs: require('../dataBase/playlists/mashupSongs'),
+    megaMixs: require('../dataBase/playlists/MegaMixs')
+}
 
-const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
-
-//const musikyAllSong = require(`../dataBase/allSongs_Musiky_list${~~(Math.random() * 4)}`);
-
-const selectRandomImg = imagemAdded => {
+const selectRandomImg = (imagemAdded) => {
     while(true){
         let numRandom = ~~(Math.random() * 12);
         let hasSomeEvenNumber = imagemAdded.some(value => value == numRandom);
@@ -18,76 +15,25 @@ const selectRandomImg = imagemAdded => {
     }
 }
 
-const unBalanced = totalPerList => {
-    let numRandom = ~~(Math.random() * 5);
-    let secondNumRandom = ~~(Math.random() * 5);
-    return numRandom - secondNumRandom;
-}
-
-const setArtistListOnMusic = musicTitle => {
-    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/, 1);
-    var filterCommas = filterMinusSign[0].split(/,\s|\s&\s|\sx\s/);
-    return filterCommas
-}
-
-const filterTitle = musicTitle => {
-    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/);
-    if(filterMinusSign.length === 1){return musicTitle}
-    return filterMinusSign[1]
-}
-
-const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb-msk-mU51ky4', valueExact='false') => {
-    var playListsOject = {};
-    var playLists = {};
-    var resumePLaylists = [];
+const randomSongs = (totalList, listType) => {
+    var songs = [];
     var alreadyAdded = [];
-    var imagemAdded = [];
-    var unBalanceThisList = 0;
-    while(Object.keys(playLists).length !== totalList){
+    //var imagemAdded = [];
 
-        let playList = {};
-        let resumePLaylist = {};
-        let musicList = [];
+    while(songs.length !== totalList){
 
-
-        let img = selectRandomImg(imagemAdded);
-        let name = `Mix ${Object.keys(playLists).length +1}`;
-
-        if(valueExact === 'false') {
-            unBalanceThisList = unBalanced(totalPerList);
-        }
+        //let img = selectRandomImg(imagemAdded);
         
-        for(let i=0; musicList.length !== totalPerList + unBalanceThisList; i++){
-            if(alreadyAdded.length === musikyAllSong.length){break}
-            let numRandom = ~~(Math.random() * musikyAllSong.length);
-            let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
-            if (!hasSomeEvenNumber){
-                alreadyAdded.push(numRandom)
-                let targetMusisc = musikyAllSong[numRandom]
-                let targetTitleToFilter = targetMusisc.snippet.title
-                targetMusisc['Artist'] = setArtistListOnMusic(targetTitleToFilter)
-                targetMusisc.snippet.title = filterTitle(targetTitleToFilter)
-                musicList.push(targetMusisc)
-            }
+        if(alreadyAdded.length === songList[listType].length){break}
+        let numRandom = ~~(Math.random() * songList[listType].length);
+        let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
+        if (!hasSomeEvenNumber){
+            alreadyAdded.push(numRandom)
+            songs.push(songList[listType][numRandom])              
         }
-        playList['playListImg'] = img;
-        playList['playListTitle'] = name;
-        playList['totalMusic'] = musicList.length;
-        playList['musicList'] = musicList;
-
-        resumePLaylist['playListImg'] = img;
-        resumePLaylist['playListTitle'] = name;
-        resumePLaylist['totalMusic'] = musicList.length;
-        resumePLaylist['keyInPlaylistDetails'] = `${ listPrefix + Object.keys(playLists).length+1 + listSuffix }`;
-        
-        resumePLaylists.push(resumePLaylist);
-        playLists[`${ listPrefix + Object.keys(playLists).length+1 + listSuffix }`] = playList
     }
 
-    playListsOject['playListResume'] = resumePLaylists
-    playListsOject['playListDetails'] = playLists;
-
-    return playListsOject;
+    return songs;
 }
 
 module.exports = randomSongs
