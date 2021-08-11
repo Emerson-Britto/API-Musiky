@@ -25,8 +25,8 @@ const unBalanced = (totalPerList) => {
 }
 
 const setArtistListOnMusic = (musicTitle) => {
-    var filterMinusSign = musicTitle.split("-", 1);
-    var filterCommas = filterMinusSign.split(",");
+    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/, 1);
+    var filterCommas = filterMinusSign[0].split(/,\s|\s&\s|\sx\s/);
     return filterCommas
 }
 
@@ -60,7 +60,7 @@ const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb
                 let musicWithArtistFilter = musikyAllSong[numRandom]
                 let targetTitleToFilter = musikyAllSong[numRandom].snippet.title
                 musicWithArtistFilter['Artist'] = setArtistListOnMusic(targetTitleToFilter);
-                musicList.push(musicWithFilterArtist)
+                musicList.push(musicWithArtistFilter)
             }
         }
         playList['playListImg'] = img;
