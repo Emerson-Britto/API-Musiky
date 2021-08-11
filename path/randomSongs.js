@@ -7,7 +7,7 @@ const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
 
 //const musikyAllSong = require(`../dataBase/allSongs_Musiky_list${~~(Math.random() * 4)}`);
 
-const selectRandomImg = (imagemAdded) => {
+const selectRandomImg = imagemAdded => {
     while(true){
         let numRandom = ~~(Math.random() * 12);
         let hasSomeEvenNumber = imagemAdded.some(value => value == numRandom);
@@ -18,16 +18,22 @@ const selectRandomImg = (imagemAdded) => {
     }
 }
 
-const unBalanced = (totalPerList) => {
+const unBalanced = totalPerList => {
     let numRandom = ~~(Math.random() * 5);
     let secondNumRandom = ~~(Math.random() * 5);
     return numRandom - secondNumRandom;
 }
 
-const setArtistListOnMusic = (musicTitle) => {
+const setArtistListOnMusic = musicTitle => {
     var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/, 1);
     var filterCommas = filterMinusSign[0].split(/,\s|\s&\s|\sx\s/);
     return filterCommas
+}
+
+const filterTitle = musicTitle => {
+    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/);
+    if(filterMinusSign.length === 1){return musicTitle}
+    return filterMinusSign[1]
 }
 
 const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb-msk-mU51ky4', valueExact='false') => {
@@ -57,10 +63,11 @@ const randomSongs = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb
             let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
             if (!hasSomeEvenNumber){
                 alreadyAdded.push(numRandom)
-                let musicWithArtistFilter = musikyAllSong[numRandom]
-                let targetTitleToFilter = musikyAllSong[numRandom].snippet.title
-                musicWithArtistFilter['Artist'] = setArtistListOnMusic(targetTitleToFilter);
-                musicList.push(musicWithArtistFilter)
+                let targetMusisc = musikyAllSong[numRandom]
+                let targetTitleToFilter = targetMusisc.snippet.title
+                targetMusisc['Artist'] = setArtistListOnMusic(targetTitleToFilter)
+                targetMusisc.snippet.title = filterTitle(targetTitleToFilter)
+                musicList.push(targetMusisc)
             }
         }
         playList['playListImg'] = img;
