@@ -78,10 +78,10 @@ const randomPlaylists = (totalList, totalPerList, listPrefix='mix', listSuffix='
         resumePLaylist['playListImg'] = img;
         resumePLaylist['playListTitle'] = name;
         resumePLaylist['totalMusic'] = musicList.length;
-        resumePLaylist['keyInPlaylistDetails'] = `${ listPrefix + Object.keys(playLists).length+1 + listSuffix }`;
+        resumePLaylist['keyInPlaylistDetails'] = `${ listPrefix + 'cs50' + Object.keys(playLists).length+1 + listSuffix }`;
         
         resumePLaylists.push(resumePLaylist);
-        playLists[`${ listPrefix + Object.keys(playLists).length+1 + listSuffix }`] = playList
+        playLists[`${ listPrefix + 'cs50' + Object.keys(playLists).length + 1 + listSuffix }`] = playList
     }
 
     playListsOject['playListResume'] = resumePLaylists
