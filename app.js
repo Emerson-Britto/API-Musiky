@@ -4,9 +4,8 @@ const app = express();
 const randomPlaylists = require('./path/randomPlaylist.js')
 const createJson = require('./adminTools/createJson.js')
 const randomSongs = require('./path/randomSongs.js')
-const suggestionsArtists = require('./path/suggestionsArtists.js')
 
-const PORT = 8877;
+const PORT = process.env.PORT || 8877;
 
 app.get('/', (req, res) => {
     res.json({
@@ -48,16 +47,6 @@ app.get('/randomSongs', async (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
 
     res.json(resultSongs)
-})
-
-app.get('/suggestionsArtists', async (req, res) => {
-    const total = req.query.total
-
-    const result = await suggestionsArtists(parseInt(total))
-
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.json(result)
 })
 
 app.listen(PORT, () => {
