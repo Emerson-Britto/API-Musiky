@@ -5,6 +5,7 @@ const randomPlaylists = require('./path/randomPlaylist.js')
 const createJson = require('./adminTools/createJson.js')
 const randomSongs = require('./path/randomSongs.js')
 const generateSuggestions = require('./path/suggestions.js')
+const autoComplete = require('./path/autoComplete.js')
 
 const PORT = process.env.PORT || 8877;
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
     })
 })
 
+
 app.get('/createJson', async (req, res) => {
     const playlistId = req.query.source
     const key = req.query.key
@@ -24,6 +26,7 @@ app.get('/createJson', async (req, res) => {
 
     res.json(jsonResult)
 })
+
 
 app.get('/randomPlaylists', async (req, res) => {
     const totalList = req.query.totalList
@@ -39,6 +42,7 @@ app.get('/randomPlaylists', async (req, res) => {
     res.json(resultSongs)
 })
 
+
 app.get('/randomSongs', async (req, res) => {
     const totalSong = req.query.totalSong
     const listType = req.query.listType
@@ -50,10 +54,22 @@ app.get('/randomSongs', async (req, res) => {
     res.json(resultSongs)
 })
 
+
 app.get('/gSuggestions', async (req, res) => {
     const total = req.query.total
 
     const result = await generateSuggestions(parseInt(total))
+
+    res.header('Access-Control-Allow-Origin', '*')
+
+    res.json(result)
+})
+
+
+app.get('/auto-complete', async (req, res) => {
+    const input = req.query.input
+
+    const result = await autoComplete(input)
 
     res.header('Access-Control-Allow-Origin', '*')
 
