@@ -24,18 +24,6 @@ const unBalanced = totalPerList => {
     return numRandom - secondNumRandom;
 }
 
-const setArtistListOnMusic = musicTitle => {
-    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/, 1);
-    var filterCommas = filterMinusSign[0].split(/,\s|\s&\s|\sx\s/);
-    return filterCommas
-}
-
-const filterTitle = musicTitle => {
-    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/);
-    if(filterMinusSign.length === 1){return musicTitle}
-    return filterMinusSign[1]
-}
-
 const randomPlaylists = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb-msk-mU51ky4', valueExact='false') => {
     var playListsOject = {};
     var playLists = {};
@@ -64,9 +52,6 @@ const randomPlaylists = (totalList, totalPerList, listPrefix='mix', listSuffix='
             if (!hasSomeEvenNumber){
                 alreadyAdded.push(numRandom)
                 let targetMusisc = musikyAllSong[numRandom]
-                let targetTitleToFilter = targetMusisc.snippet.title
-                targetMusisc['Artist'] = setArtistListOnMusic(targetTitleToFilter)
-                targetMusisc.snippet.title = filterTitle(targetTitleToFilter)
                 musicList.push(targetMusisc)
             }
         }

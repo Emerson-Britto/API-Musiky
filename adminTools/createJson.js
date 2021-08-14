@@ -17,6 +17,18 @@ const getApiResult = async (listToSearch, resultNoFormat, key) => {
     })	
 }
 
+const setArtistListOnMusic = musicTitle => {
+    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/, 1);
+    var filterCommas = filterMinusSign[0].split(/,\s|\s&\s|\sx\s/);
+    return filterCommas
+}
+
+const filterTitle = musicTitle => {
+    var filterMinusSign = musicTitle.split(/\s-|\s—|\s‒/);
+    if(filterMinusSign.length === 1){return musicTitle}
+    return filterMinusSign[1]
+}
+
 const getListFromYT = async (idsTotalResult, key) => {
 	var totalToSearch = idsTotalResult.length;
 	var resultNoFormat =[];
@@ -41,22 +53,28 @@ const getListFromYT = async (idsTotalResult, key) => {
         await getApiResult(listToSearch, resultNoFormat, key);
 
 	    resultNoFormat.forEach(music =>{
-	    	delete music['snippet']['description']
-	    	delete music['snippet']['localized']['description']
-	        delete music['kind']
-	    	delete music['etag']
-	    	delete music['snippet']['tags']
-	    	delete music['snippet']['thumbnails']['high']
-	    	delete music['snippet']['thumbnails']['standard']
-	    	delete music['snippet']['publishedAt']
-
-	    	var re = /.(\(|\[)(.)?\w+(.\w+)?(\)|\]|.)(-.|\/.)?(\w+.\w+)?(\]|\))?/;
-	    	music['snippet']['title'] = music['snippet']['title'].replace(re, '');
-
-	    	music['contentDetails']['duration'] = setDuration(music);
 
 	        let hasSomeEvenNumber = musicTotalResult.some(value => value.id === music.id);
 	        if (hasSomeEvenNumber === false){
+
+		    	delete music['snippet']['description']
+		    	delete music['snippet']['localized']['description']
+		        delete music['kind']
+		    	delete music['etag']
+		    	delete music['snippet']['tags']
+		    	delete music['snippet']['thumbnails']['high']
+		    	delete music['snippet']['thumbnails']['standard']
+		    	delete music['snippet']['publishedAt']
+
+		    	var re = /.(\(|\[)(.)?\w+(.\w+)?(\)|\]|.)(-.|\/.)?(\w+.\w+)?(\]|\))?/;
+		    	music['snippet']['title'] = music['snippet']['title'].replace(re, '');
+
+		    	music['contentDetails']['duration'] = setDuration(music);
+
+	            let musicTitle = music.snippet.title
+		        music['Artist'] = setArtistListOnMusic(musicTitle)
+	            music.snippet.title = filterTitle(musicTitle)
+	        	
 	            musicTotalResult.push(music);
 	        }
 	    })
