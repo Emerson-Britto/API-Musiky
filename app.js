@@ -68,8 +68,9 @@ app.get('/gSuggestions', async (req, res) => {
 
 app.get('/auto-complete', async (req, res) => {
     const input = req.query.input
+    const maxResult = req.query.maxResult
 
-    const result = await autoComplete(input)
+    const result = await autoComplete(input, parseInt(maxResult))
 
     res.header('Access-Control-Allow-Origin', '*')
 

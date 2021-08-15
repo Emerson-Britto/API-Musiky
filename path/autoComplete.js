@@ -6,7 +6,7 @@ const allSong3 = require('../dataBase/allSongs_Musiky_list3');
 const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
 
 
-const autoComplete = value => {
+const autoComplete = (value, maxResult) => {
 
     var selected = []
 
@@ -26,6 +26,7 @@ const autoComplete = value => {
             let hasSomeEvenTitle = selected.some(value => value == title);
             if (exp.test(title) && !hasSomeEvenTitle) {
                 selected.push(title)
+                if(selected.length == maxResult){return selected}
             }
         }
     }
