@@ -10,21 +10,22 @@ const generateSuggestions = total => {
     var suggestionsList = [];
     var alreadyAdded = [];
 
-    while(suggestionsList.length !== total){
+    while(suggestionsList.length < total){
 
     	let numRandom = ~~(Math.random() * musikyAllSong.length);
 
     	let artists = musikyAllSong[numRandom]['Artist']
 
         artists.map(artist =>{
+
             let hasSomeEvenNumber = suggestionsList.some(value => value == artist);
+
             let longString = artist.length > 18;
             if (!hasSomeEvenNumber && !longString){
                 suggestionsList.push(artist)
             }
         })    
     }
-    
     return suggestionsList;
 }
 

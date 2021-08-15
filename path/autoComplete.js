@@ -26,8 +26,9 @@ const autoComplete = (value, maxResult) => {
             let hasSomeEvenTitle = selected.some(value => value == title);
             if (exp.test(title) && !hasSomeEvenTitle) {
                 selected.push(title)
-                if(selected.length == maxResult){return selected}
             }
+
+            if(selected.length == maxResult){return selected}
         }
     }
     
