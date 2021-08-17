@@ -9,7 +9,7 @@ const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
 
 const selectRandomImg = imagemAdded => {
     while(true){
-        let numRandom = ~~(Math.random() * 12);
+        let numRandom = ~~(Math.random() * 24);
         let hasSomeEvenNumber = imagemAdded.some(value => value == numRandom);
         if (!hasSomeEvenNumber){
             imagemAdded.push(numRandom)
