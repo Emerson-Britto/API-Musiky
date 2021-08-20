@@ -6,6 +6,7 @@ const createJson = require('./adminTools/createJson.js')
 const randomSongs = require('./path/randomSongs.js')
 const generateSuggestions = require('./path/suggestions.js')
 const autoComplete = require('./path/autoComplete.js')
+const greeting = require('./path/greeting.js')
 
 const PORT = process.env.PORT || 8877;
 
@@ -75,6 +76,17 @@ app.get('/auto-complete', async (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')
 
     res.json(result)
+})
+
+app.get('/getGreeting', async (req, res) => {
+
+    const result = await greeting()
+
+    res.header({'Content-Type': 'image/gif'});
+
+    res.header('Access-Control-Allow-Origin', '*')
+
+    res.sendFile(result)
 })
 
 app.listen(PORT, () => {
