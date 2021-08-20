@@ -78,7 +78,7 @@ app.get('/auto-complete', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(new Date())
+    console.log(new Date().getHours())
     console.log('port: ' + PORT)
 })
 
