@@ -9,6 +9,8 @@ const getTime = () => {
 const greeting = () => {
     var time = getTime() - 3
 
+    console.log(time)
+
     const period = [
         {'Good Night': time >= 0 && time < 5},
         {'SunRise': time == 5},
@@ -18,9 +20,12 @@ const greeting = () => {
     ]
 
     let firstIndexSameTrue = period.findIndex(value => Object.values(value)[0] == true);
+    console.log(firstIndexSameTrue)
     let greetingText = Object.keys(period[firstIndexSameTrue])[0]
+    console.log(greetingText)
 
     let imgRandom = ~~(Math.random() * 3);
+    console.log(imgRandom)
 
     filePath = `period/1${firstIndexSameTrue}4/${imgRandom}2.gif`
 
@@ -28,9 +33,6 @@ const greeting = () => {
         'greetingText': greetingText,
         'greetingImg': `${apiUrl}/img?path=${filePath}`
     }
-
-    console.log(time)
-    console.log(obj)
 
     return obj
 }
