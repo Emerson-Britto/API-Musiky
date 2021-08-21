@@ -7,6 +7,7 @@ const randomSongs = require('./path/randomSongs.js')
 const generateSuggestions = require('./path/suggestions.js')
 const autoComplete = require('./path/autoComplete.js')
 const greeting = require('./path/greeting.js')
+const imgDb = require('./path/imgDb.js')
 
 const PORT = process.env.PORT || 8877;
 
@@ -82,8 +83,17 @@ app.get('/getGreeting', async (req, res) => {
 
     const result = await greeting()
 
-    res.header({'Content-Type': 'image/gif'});
+    res.header('Access-Control-Allow-Origin', '*')
 
+    res.json(result)
+})
+
+app.get('/img', async (req, res) => {
+    const path = req.query.path
+
+    const result = await imgDb(path)
+
+    res.header({'Content-Type': 'image/gif'});
     res.header('Access-Control-Allow-Origin', '*')
 
     res.sendFile(result)
