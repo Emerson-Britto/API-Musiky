@@ -1,6 +1,7 @@
 let path = require('path')
 
 const apiUrl = 'https://api-musiky.herokuapp.com'
+const local_API = 'http://localhost:8877'
 
 const getTime = () => {
     return new Date().getHours();
@@ -27,7 +28,7 @@ const greeting = () => {
 
     obj = {
         'greetingText': greetingText,
-        'greetingImg': `${apiUrl}/img?path=${filePath}`
+        'greetingImg': `${local_API}/msk/files/img?path=${filePath}`
     }
 
     return obj

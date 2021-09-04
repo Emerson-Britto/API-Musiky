@@ -1,15 +1,21 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 
-const randomPlaylists = require('./path/randomPlaylist.js')
-const createJson = require('./adminTools/createJson.js')
-const randomSongs = require('./path/randomSongs.js')
-const generateSuggestions = require('./path/suggestions.js')
-const autoComplete = require('./path/autoComplete.js')
-const greeting = require('./path/greeting.js')
-const imgDb = require('./path/imgDb.js')
 
 const PORT = process.env.PORT || 8877;
+
+
+app.use(bodyParser.json())
+
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*')
+    console.log('----------------------------')
+    console.log('NEW REQUEST: ' + req.url)
+    console.log('DATE: ' + new Date())
+    console.log('----------------------------')
+    next()
+})
 
 app.get('/', (req, res) => {
     res.json({
@@ -20,87 +26,36 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/createJson', async (req, res) => {
-    const playlistId = req.query.source
-    const key = req.query.key
+const accountRouter = require('./routers/account')
+app.use('/msk/account', accountRouter)
 
-    const jsonResult = await createJson(playlistId, key)
+const randomContentRouter = require('./routers/random-content')
+app.use('/msk/random-content', randomContentRouter)
 
-    res.json(jsonResult)
-})
+const playlistsRouter = require('./routers/playlists')
+app.use('/msk/playlist', playlistsRouter)
 
+const searchRouter = require('./routers/search')
+app.use('/msk/search', searchRouter)
 
-app.get('/randomPlaylists', async (req, res) => {
-    const totalList = req.query.totalList
-    const totalPerList = req.query.totalPerList
-    const listPrefix = req.query.listPrefix
-    const listSuffix = req.query.listSuffix
-    const valueExactPerList = req.query.valueExact
+const filesRouter = require('./routers/files')
+app.use('/msk/files', filesRouter)
 
-    const resultSongs = await randomPlaylists(parseInt(totalList), parseInt(totalPerList), listPrefix, listSuffix, valueExactPerList)
-
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.json(resultSongs)
-})
+const adminRouter = require('./routers/admin')
+app.use('/msk/admin', adminRouter)
 
 
-app.get('/randomSongs', async (req, res) => {
-    const totalSong = req.query.totalSong
-    const listType = req.query.listType
-
-    const resultSongs = await randomSongs(parseInt(totalSong), listType)
-
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.json(resultSongs)
-})
-
-
-app.get('/gSuggestions', async (req, res) => {
-    const total = req.query.total
-
-    const result = await generateSuggestions(parseInt(total))
-
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.json(result)
-})
-
-
-app.get('/auto-complete', async (req, res) => {
-    const input = req.query.input
-    const maxResult = req.query.maxResult
-
-    const result = await autoComplete(input, parseInt(maxResult))
-
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.json(result)
-})
-
-app.get('/getGreeting', async (req, res) => {
+const greeting = require('./routers/greeting.js')
+app.get('/greeting', async (req, res) => {
 
     const result = await greeting()
 
-    res.header('Access-Control-Allow-Origin', '*')
-
     res.json(result)
 })
 
-app.get('/img', async (req, res) => {
-    const path = req.query.path
-
-    const result = await imgDb(path)
-
-    res.header({'Content-Type': 'image/gif'});
-    res.header('Access-Control-Allow-Origin', '*')
-
-    res.sendFile(result)
-})
 
 app.listen(PORT, () => {
-    console.log(new Date().getHours())
+    console.log('Started: ' + new Date())
     console.log('port: ' + PORT)
 })
 

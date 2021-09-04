@@ -1,7 +1,7 @@
 const songList = {
-    ambienceSong: require('../dataBase/playlists/long_Songs-Ambient'),
-    mashupSongs: require('../dataBase/playlists/mashupSongs'),
-    megaMixs: require('../dataBase/playlists/MegaMixs')
+    ambienceSong: require('../../dataBase/playlists/long_Songs-Ambient'),
+    mashupSongs: require('../../dataBase/playlists/mashupSongs'),
+    megaMixs: require('../../dataBase/playlists/MegaMixs')
 }
 
 const selectRandomImg = (imagemAdded) => {
