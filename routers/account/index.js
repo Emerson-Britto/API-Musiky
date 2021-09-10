@@ -15,10 +15,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/create', (req, res) => {
-    console.log('00')
-    createAccount(req)
-
-    res.end()
+    createAccount(req.body, res)
 })
 
 module.exports = router

@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
+const config = require('config')
 
 
-const PORT = process.env.PORT || 8877;
+const PORT = process.env.PORT || config.get('api.port')
 
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
     console.log('----------------------------')
     console.log('NEW REQUEST: ' + req.url)
     console.log('DATE: ' + new Date())
@@ -52,7 +55,6 @@ app.get('/greeting', async (req, res) => {
 
     res.json(result)
 })
-
 
 app.listen(PORT, () => {
     console.log('Started: ' + new Date())
