@@ -1,5 +1,11 @@
 {
     "mysql": {
+        "connectionString": "mysql://roae04yh*************dt3bgg3gu6nqy**********yhwsb.us-east-1.********aws.com:3*********y5gdwh8",
+        "database": "fv9l30s7******",
+        "user": "roae04y********",
+        "password": "d9x8mt*********",
+        "host": "dt3bgg3gu*************us-east-1.rds.amazonaws.com",
+        "port": "33**"
     },
     "api": {
         "port": 8877
