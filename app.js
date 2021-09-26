@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
-const config = require('config')
 
 
-const PORT = process.env.PORT || config.get('api.port')
+const PORT = process.env.PORT || 9877
 
 
 app.use(bodyParser.json())
@@ -28,9 +27,6 @@ app.get('/', (req, res) => {
     })
 })
 
-
-const accountRouter = require('./routers/account')
-app.use('/msk/account', accountRouter)
 
 const randomContentRouter = require('./routers/random-content')
 app.use('/msk/random-content', randomContentRouter)
