@@ -12,6 +12,7 @@ const autoComplete = (value, maxResult) => {
 
     if (value.length > 0) {
         for (var i = 0; i < musikyAllSong.length; i++) {
+
             var exp = new RegExp(value, "i")
             var artist = musikyAllSong[i]['Artist']
             var title = musikyAllSong[i]['snippet']['title']
@@ -24,11 +25,10 @@ const autoComplete = (value, maxResult) => {
             })
 
             let hasSomeEvenTitle = selected.some(value => value == title);
-            if (exp.test(title) && !hasSomeEvenTitle) {
-                selected.push(title)
-            }
 
-            if(selected.length == maxResult){return selected}
+            if (exp.test(title) && !hasSomeEvenTitle) selected.push(title)
+
+            if(selected.length >= maxResult) return selected
         }
     }
     

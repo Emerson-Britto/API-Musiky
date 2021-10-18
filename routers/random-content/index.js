@@ -13,13 +13,8 @@ router.options('/', (req, res) => {
 
 
 router.get('/playlists', async (req, res) => {
-    const totalList = req.query.totalList
-    const totalPerList = req.query.totalPerList
-    const listPrefix = req.query.listPrefix
-    const listSuffix = req.query.listSuffix
-    const valueExactPerList = req.query.valueExact
 
-    const resultSongs = await randomPlaylists(parseInt(totalList), parseInt(totalPerList), listPrefix, listSuffix, valueExactPerList)
+    const resultSongs = await randomPlaylists(req.query)
 
     res.json(resultSongs)
 })

@@ -5,7 +5,6 @@ const allSong3 = require('../../dataBase/allSongs_Musiky_list3');
 
 const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
 
-//const musikyAllSong = require(`../dataBase/allSongs_Musiky_list${~~(Math.random() * 4)}`);
 
 const selectRandomImg = imagemAdded => {
     while(true){
@@ -24,13 +23,21 @@ const unBalanced = totalPerList => {
     return numRandom - secondNumRandom;
 }
 
-const randomPlaylists = (totalList, totalPerList, listPrefix='mix', listSuffix='eMeb-msk-mU51ky4', valueExact='false') => {
-    var playListsOject = {};
-    var playLists = {};
-    var resumePLaylists = [];
-    var alreadyAdded = [];
-    var imagemAdded = [];
-    var unBalanceThisList = 0;
+const randomPlaylists = config => {
+    
+    let listPrefix = config.listPrefix ? config.listPrefix : 'mix';
+    let listSuffix = config.listSuffix ? config.listSuffix : 'eMeb-msk-mU51ky4';
+
+    let totalList = parseInt(config.totalList)
+    let totalPerList = parseInt(config.totalPerList)
+
+    let playListsOject = {};
+    let playLists = {};
+    let resumePLaylistsInfor = [];
+    let numberAlreadyAdded = [];
+    let imagemAdded = [];
+    let unBalanceThisList = 0;
+
     while(Object.keys(playLists).length !== totalList){
 
         let playList = {};
@@ -41,16 +48,16 @@ const randomPlaylists = (totalList, totalPerList, listPrefix='mix', listSuffix='
         let img = selectRandomImg(imagemAdded);
         let name = `Mix ${Object.keys(playLists).length +1}`;
 
-        if(valueExact === 'false') {
+        if(!config.valueExact || config.valueExact == 'false') {
             unBalanceThisList = unBalanced(totalPerList);
         }
         
         for(let i=0; musicList.length !== totalPerList + unBalanceThisList; i++){
-            if(alreadyAdded.length === musikyAllSong.length){break}
+            if(numberAlreadyAdded.length === musikyAllSong.length){break}
             let numRandom = ~~(Math.random() * musikyAllSong.length);
-            let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
+            let hasSomeEvenNumber = numberAlreadyAdded.some(value => value == numRandom);
             if (!hasSomeEvenNumber){
-                alreadyAdded.push(numRandom)
+                numberAlreadyAdded.push(numRandom)
                 let targetMusisc = musikyAllSong[numRandom]
                 musicList.push(targetMusisc)
             }
@@ -65,11 +72,11 @@ const randomPlaylists = (totalList, totalPerList, listPrefix='mix', listSuffix='
         resumePLaylist['totalMusic'] = musicList.length;
         resumePLaylist['keyInPlaylistDetails'] = `${ listPrefix + 'cs50' + Object.keys(playLists).length+1 + listSuffix }`;
         
-        resumePLaylists.push(resumePLaylist);
+        resumePLaylistsInfor.push(resumePLaylist);
         playLists[`${ listPrefix + 'cs50' + Object.keys(playLists).length + 1 + listSuffix }`] = playList
     }
 
-    playListsOject['playListResume'] = resumePLaylists
+    playListsOject['playListResume'] = resumePLaylistsInfor
     playListsOject['playListDetails'] = playLists;
 
     return playListsOject;
