@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser')
 
 
-const PORT = process.env.PORT || 9877
+const PORT = process.env.PORT || 9874
 
 
 app.use(bodyParser.json())
@@ -39,9 +39,6 @@ app.use('/msk/search', searchRouter)
 
 const filesRouter = require('./routers/files')
 app.use('/msk/files', filesRouter)
-
-const adminRouter = require('./routers/admin')
-app.use('/msk/admin', adminRouter)
 
 
 const greeting = require('./routers/greeting.js')
