@@ -4,27 +4,20 @@ const songList = {
     megaMixs: require('../../dataBase/playlists/MegaMixs')
 }
 
-const selectRandomImg = (imagemAdded) => {
-    while(true){
-        let numRandom = ~~(Math.random() * 12);
-        let hasSomeEvenNumber = imagemAdded.some(value => value == numRandom);
-        if (!hasSomeEvenNumber){
-            imagemAdded.push(numRandom)
-            return `https://raw.githubusercontent.com/Emerson-Britto/API-Musiky/main/dataBase/imgs/chill/${numRandom}.jpg`
-        }
-    }
-}
+const urlBase = process.env.DEV_ENV 
+    ? `http://localhost:${9873}/`
+    : 'https://cdn-istatics.herokuapp.com/'
+
 
 const randomSongs = (totalList, listType) => {
+    
     var songs = [];
     var alreadyAdded = [];
-    //var imagemAdded = [];
 
     while(songs.length !== totalList){
-
-        //let img = selectRandomImg(imagemAdded);
         
-        if(alreadyAdded.length === songList[listType].length){break}
+        if(alreadyAdded.length === songList[listType].length){ break }
+
         let numRandom = ~~(Math.random() * songList[listType].length);
         let hasSomeEvenNumber = alreadyAdded.some(value => value == numRandom);
         if (!hasSomeEvenNumber){
@@ -35,5 +28,18 @@ const randomSongs = (totalList, listType) => {
 
     return songs;
 }
+
+function randomImg(imagensEvenAdded){
+    while(true){
+        let numRandom = ~~(Math.random() * 12);
+        let hasSomeEvenNumber = imagensEvenAdded.some(value => value == numRandom);
+
+        if (!hasSomeEvenNumber){
+            imagensEvenAdded.push(numRandom)
+            return `${urlBase}static/imgs/chill/${numRandom}.jpg`
+        }
+    }
+}
+
 
 module.exports = randomSongs
