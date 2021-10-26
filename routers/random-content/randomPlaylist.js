@@ -1,85 +1,124 @@
-const allSong0 = require('../../dataBase/allSongs_Musiky_list0');
-const allSong1 = require('../../dataBase/allSongs_Musiky_list1');
-const allSong2 = require('../../dataBase/allSongs_Musiky_list2');
-const allSong3 = require('../../dataBase/allSongs_Musiky_list3');
+const axios = require('axios');
 
-const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
+const urlBase = process.env.DEV_ENV 
+    ? `http://localhost:${9873}/`
+    : 'https://cdn-istatics.herokuapp.com/'
 
+const playlistNames = [
+    "random songs",
+    "day mix",
+    "just a mix",
+    "the songs",
+    "maybe you like it",
+    "let's play",
+    "I mean",
+    "get some music",
+    "choices",
+    "explore new things",
+    "a random world",
+    "maybe you don't know"
+]
 
-const selectRandomImg = imagemAdded => {
-    while(true){
-        let numRandom = ~~(Math.random() * 24);
-        let hasSomeEvenNumber = imagemAdded.some(value => value == numRandom);
-        if (!hasSomeEvenNumber){
-            imagemAdded.push(numRandom)
-            return `https://raw.githubusercontent.com/Emerson-Britto/API-Musiky/main/dataBase/imgs/chill/${numRandom}.jpg`
-        }
+const request = async(name, params='') => {
+    let type = {
+        'AllIds': 'music/getAllIds',
+        'mountPlaylist': 'playlist/'
     }
+    let { data } = await axios.get(`${urlBase + type[name] + params}`);
+    return data
 }
 
 const unBalanced = totalPerList => {
-    let numRandom = ~~(Math.random() * 5);
-    let secondNumRandom = ~~(Math.random() * 5);
-    return numRandom - secondNumRandom;
+    return totalPerList + (~~(Math.random() * 5) - ~~(Math.random() * 5));
 }
 
-const randomPlaylists = config => {
-    
-    let listPrefix = config.listPrefix ? config.listPrefix : 'mix';
-    let listSuffix = config.listSuffix ? config.listSuffix : 'eMeb-msk-mU51ky4';
+const randomPlaylists = async(config) => {
+
+    let { ids } = await request('AllIds');
 
     let totalList = parseInt(config.totalList)
     let totalPerList = parseInt(config.totalPerList)
 
-    let playListsOject = {};
-    let playLists = {};
+    let playlists = {
+        request: 'random-list',
+        items: [],
+        length: 0
+    };
     let resumePLaylistsInfor = [];
-    let numberAlreadyAdded = [];
-    let imagemAdded = [];
-    let unBalanceThisList = 0;
+    let imagensEvenAdded = [];
+    let namesEvenAdded = [];
 
-    while(Object.keys(playLists).length !== totalList){
+    while(playlists.items.length !== totalList){
 
-        let playList = {};
-        let resumePLaylist = {};
-        let musicList = [];
+        let playlist = {
+            infors: {
+                playlistId: null,
+                img: null,
+                title: null,
+                description: null,
+                length: null,
+                totalDuration: 0
+            },
+            list: [],
+        };
+        let idsList =[];
 
+        playlist.infors.img = randomImg(imagensEvenAdded);
+        playlist.infors.title = randomName(namesEvenAdded);
 
-        let img = selectRandomImg(imagemAdded);
-        let name = `Mix ${Object.keys(playLists).length +1}`;
+        totalPerList = unBalanced(totalPerList);
 
-        if(!config.valueExact || config.valueExact == 'false') {
-            unBalanceThisList = unBalanced(totalPerList);
-        }
-        
-        for(let i=0; musicList.length !== totalPerList + unBalanceThisList; i++){
-            if(numberAlreadyAdded.length === musikyAllSong.length){break}
-            let numRandom = ~~(Math.random() * musikyAllSong.length);
-            let hasSomeEvenNumber = numberAlreadyAdded.some(value => value == numRandom);
-            if (!hasSomeEvenNumber){
-                numberAlreadyAdded.push(numRandom)
-                let targetMusisc = musikyAllSong[numRandom]
-                musicList.push(targetMusisc)
+        for(let i=0; idsList.length !== totalPerList; i++){
+
+            if(idsList.length === ids.length){ break }
+
+            let numRandom = ~~(Math.random() * ids.length);
+            let hasEvenId = idsList.some(id => id == ids[numRandom]);
+            if (!hasEvenId){
+                idsList.push(ids[numRandom])
             }
         }
-        playList['playListImg'] = img;
-        playList['playListTitle'] = name;
-        playList['totalMusic'] = musicList.length;
-        playList['musicList'] = musicList;
 
-        resumePLaylist['playListImg'] = img;
-        resumePLaylist['playListTitle'] = name;
-        resumePLaylist['totalMusic'] = musicList.length;
-        resumePLaylist['keyInPlaylistDetails'] = `${ listPrefix + 'cs50' + Object.keys(playLists).length+1 + listSuffix }`;
-        
-        resumePLaylistsInfor.push(resumePLaylist);
-        playLists[`${ listPrefix + 'cs50' + Object.keys(playLists).length + 1 + listSuffix }`] = playList
+        idsList = idsList.join('-ii-');
+
+        let { list, resquestId } = await request('mountPlaylist', idsList);
+
+        playlist.list = list;
+        playlist.infors.length = list.length;
+        playlist.infors.playlistId = resquestId;
+
+        playlists.items.push(playlist);
     }
 
-    playListsOject['playListResume'] = resumePLaylistsInfor
-    playListsOject['playListDetails'] = playLists;
+    playlists.length = playlists.items.length;
 
-    return playListsOject;
+    return playlists;
+}
+
+
+function randomName(namesEvenAdded){
+    while(true){
+        let numRandom = ~~(Math.random() * playlistNames.length);
+        let hasSomeEvenNumber = namesEvenAdded.some(value => value == numRandom);
+
+        if (!hasSomeEvenNumber){
+            namesEvenAdded.push(numRandom)
+            return playlistNames[numRandom]
+        }
+    }
+}
+
+
+function randomImg(imagensEvenAdded){
+    while(true){
+        let numRandom = ~~(Math.random() * 24);
+        let hasSomeEvenNumber = imagensEvenAdded.some(value => value == numRandom);
+
+        if (!hasSomeEvenNumber){
+            imagensEvenAdded.push(numRandom)
+            return `${urlBase}static/imgs/chill/${numRandom}.jpg`
+        }
+    }
 }
 
 module.exports = randomPlaylists

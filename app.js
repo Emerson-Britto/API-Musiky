@@ -1,22 +1,22 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
+const devENV = process.env.DEV_ENV;
+const PORT = process.env.PORT || devENV;
 
-const PORT = process.env.PORT || 9874
-
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', '*')
-    res.set('Access-Control-Allow-Headers', 'Content-Type')
-    console.log('----------------------------')
-    console.log('NEW REQUEST: ' + req.url)
-    console.log('DATE: ' + new Date())
-    console.log('----------------------------')
-    next()
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    console.log('----------------------------');
+    console.log('NEW REQUEST: ' + req.url);
+    console.log('DATE: ' + new Date());
+    console.log('----------------------------');
+    next();
 })
 
 app.get('/', (req, res) => {
@@ -24,34 +24,38 @@ app.get('/', (req, res) => {
         title: 'API-Musiky',
         author: 'Emerson-Britto',
         description: "Musiky Project"
-    })
-})
+    });
+});
 
 
-const randomContentRouter = require('./routers/random-content')
-app.use('/msk/random-content', randomContentRouter)
+const randomContentRouter = require('./routers/random-content');
+app.use('/random', randomContentRouter);
 
-const playlistsRouter = require('./routers/playlists')
-app.use('/msk/playlist', playlistsRouter)
+const playlistsRouter = require('./routers/playlists');
+app.use('/playlist', playlistsRouter);
 
-const searchRouter = require('./routers/search')
-app.use('/msk/search', searchRouter)
+const searchRouter = require('./routers/search');
+app.use('/search', searchRouter);
 
-const filesRouter = require('./routers/files')
-app.use('/msk/files', filesRouter)
+const filesRouter = require('./routers/files');
+app.use('/files', filesRouter);
 
 
-const greeting = require('./routers/greeting.js')
+const greeting = require('./routers/greeting.js');
 app.get('/greeting', async (req, res) => {
 
-    const result = await greeting()
+    const result = await greeting();
 
-    res.json(result)
-})
+    res.json(result);
+});
 
-app.listen(PORT, () => {
-    console.log('Started: ' + new Date())
-    console.log('port: ' + PORT)
-})
+
+const devConsole = () => {
+
+    console.log('Started: ' + new Date());
+    if(devENV) console.log(`root: http://localhost:${PORT}/`);
+}
+
+app.listen(PORT, devConsole());
 
 //https://api-musiky.herokuapp.com/createjson?source=[PLAYLIST_LINK]&key=[KEY]
