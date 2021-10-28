@@ -1,30 +1,35 @@
-const allSong0 = [];
-const allSong1 = [];
-const allSong2 = [];
-const allSong3 = [];
-
-const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
+const axios = require('axios');
 
 
-const generateSuggestions = total => {
+const urlBase = process.env.DEV_ENV 
+    ? `http://localhost:${9873}/`
+    : 'https://cdn-istatics.herokuapp.com/'
+
+
+const request = async(name, params='') => {
+    let type = {
+        'allArtistsNames': 'artist/allNames'
+    }
+    let { data } = await axios.get(`${urlBase + type[name] + params}`);
+    return data
+}
+
+const generateSuggestions = async(total) => {
+
+    let { names } = await request('allArtistsNames')
+
     var suggestionsList = [];
-    var alreadyAdded = [];
 
     while(suggestionsList.length < total){
 
-    	let numRandom = ~~(Math.random() * musikyAllSong.length);
+    	let numRandom = ~~(Math.random() * names.length);
+    	let artistName = names[numRandom]
 
-    	let artists = musikyAllSong[numRandom]['Artist']
+        let hasSomeEvenName = suggestionsList.some(value => value == artistName);
 
-        artists.map(artist =>{
-
-            let hasSomeEvenNumber = suggestionsList.some(value => value == artist);
-
-            let longString = artist.length > 18;
-            if (!hasSomeEvenNumber && !longString){
-                suggestionsList.push(artist)
-            }
-        })    
+        if (!hasSomeEvenName){
+            suggestionsList.push(artistName)
+        }  
     }
     return suggestionsList;
 }
