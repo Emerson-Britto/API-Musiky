@@ -1,7 +1,7 @@
-const allSong0 = require('../../dataBase/allSongs_Musiky_list0');
-const allSong1 = require('../../dataBase/allSongs_Musiky_list1');
-const allSong2 = require('../../dataBase/allSongs_Musiky_list2');
-const allSong3 = require('../../dataBase/allSongs_Musiky_list3');
+const allSong0 = [];
+const allSong1 = [];
+const allSong2 = [];
+const allSong3 = [];
 
 const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
 

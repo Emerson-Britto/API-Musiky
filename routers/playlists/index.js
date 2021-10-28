@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+const getPlaylistsById = require('./getPlaylistsById.js');
 
 router.options('/', (req, res) => {
     res.set('Access-Control-Allow-Methods', 'GET')
@@ -8,8 +9,13 @@ router.options('/', (req, res) => {
     res.end()
 })
 
-router.get('/', (req, res) => {
-	res.json({msg: 'router unavailable, yet...'})
+
+router.get('/:id', async (req, res) => {
+
+    const playlist = await getPlaylistsById(req.params)
+
+    res.json(playlist)
 })
+
 
 module.exports = router

@@ -21,10 +21,10 @@ router.get('/playlists', async (req, res) => {
 
 
 router.get('/songs', async (req, res) => {
-    const totalSong = req.query.totalSong
+    const page = req.query.page
     const listType = req.query.listType
 
-    const resultSongs = await randomSongs(parseInt(totalSong), listType)
+    const resultSongs = await randomSongs(listType, parseInt(page))
 
     res.json(resultSongs)
 })
