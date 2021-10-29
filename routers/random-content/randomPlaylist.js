@@ -2,10 +2,6 @@ const axios = require('axios');
 
 const playlistsJson = require('../../dataBase/playlists/random.json');
 
-const urlBase = process.env.DEV_ENV 
-    ? `http://localhost:${9873}/`
-    : 'https://cdn-istatics.herokuapp.com/'
-    
 
 const randomPlaylists = async({ totalList }) => {
     
@@ -25,7 +21,7 @@ const randomPlaylists = async({ totalList }) => {
 
         let hasSome = evenAdded.some(value => value === numRandom);
 
-        if(!hasSome){
+        if(!hasSome && list.key){
             list.infors.length = list.key.split('-ii-').length;
             evenAdded.push(numRandom);
             playlists.items.push(list);

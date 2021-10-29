@@ -1,32 +1,34 @@
-const allSong0 = [];
-const allSong1 = [];
-const allSong2 = [];
-const allSong3 = [];
+const axios = require('axios');
 
-const musikyAllSong = [...allSong0, ...allSong1, ...allSong2, ...allSong3]
+const urlBase = process.env.DEV_ENV 
+    ? `http://localhost:${9872}/`
+    : 'https://cdn-istatics.herokuapp.com/'
 
 
-const autoComplete = (value, maxResult) => {
+const request = async(name, params='') => {
+    let path = {
+        'allMusicNames': 'music/all'
+    }
+    let { data } = await axios.get(`${urlBase + path[name] + '?' + params}`);
+    return data
+}
 
-    var selected = []
+const autoComplete = async(value, maxResult=10) => {
+
+    let { items } = await request('allMusicNames', 'names=1&artists=1&maxResult=5000')
+
+    var selected = [];
 
     if (value.length > 0) {
-        for (var i = 0; i < musikyAllSong.length; i++) {
+        for (var i = 0; i < items.length; i++) {
 
-            var exp = new RegExp(value, "i")
-            var artist = musikyAllSong[i]['Artist']
-            var title = musikyAllSong[i]['snippet']['title']
+            var exp = new RegExp(value, "i");
+            var item = items[i];
  
-            artist.map(targetArtist => {
-                let hasSomeEvenArtist = selected.some(value => value == targetArtist);
-                if (exp.test(targetArtist) && !hasSomeEvenArtist) {
-                    selected.push(targetArtist)
-                }                
-            })
-
-            let hasSomeEvenTitle = selected.some(value => value == title);
-
-            if (exp.test(title) && !hasSomeEvenTitle) selected.push(title)
+            let hasSomeEvenArtist = selected.some(value => value === item);
+            if (exp.test(item) && !hasSomeEvenArtist) {
+                selected.push(item);
+            }
 
             if(selected.length >= maxResult) return selected
         }

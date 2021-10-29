@@ -37,9 +37,6 @@ app.use('/playlist', playlistsRouter);
 const searchRouter = require('./routers/search');
 app.use('/search', searchRouter);
 
-const filesRouter = require('./routers/files');
-app.use('/files', filesRouter);
-
 
 const greeting = require('./routers/greeting.js');
 app.get('/greeting', async (req, res) => {

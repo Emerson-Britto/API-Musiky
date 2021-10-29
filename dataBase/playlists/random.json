@@ -2,7 +2,7 @@
 	{
         "infors": {
             "playlistId": "uiydcadfru8y-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/5.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/5.jpg",
             "title": "day mix",
             "description": "this list was random generated",
             "length": 0,
@@ -12,7 +12,7 @@
     },{
         "infors": {
             "playlistId": "upiukuhbc1dfru8y-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/4.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/4.jpg",
             "title": "the songs",
             "description": "this list was random generated",
             "length": 0,
@@ -22,7 +22,7 @@
     },{
         "infors": {
             "playlistId": "azmukucw6jku8y-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/7.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/7.jpg",
             "title": "just a mix",
             "description": "this list was random generated",
             "length": 0,
@@ -32,7 +32,7 @@
     },{
         "infors": {
             "playlistId": "awmvcwuyhjf1su0y-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/16.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/16.jpg",
             "title": "I mean",
             "description": "this list was random generated",
             "length": 0,
@@ -42,7 +42,7 @@
     },{
         "infors": {
             "playlistId": "oiu34dsxwuhjk1-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/0.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/0.jpg",
             "title": "a random world",
             "description": "this list was random generated",
             "length": 0,
@@ -52,7 +52,7 @@
     },{
         "infors": {
             "playlistId": "ohiu345jhitrchrain-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/23.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/23.jpg",
             "title": "choices",
             "description": "this list was random generated",
             "length": 0,
@@ -62,12 +62,22 @@
     },{
         "infors": {
             "playlistId": "olophervdcxbsin-rm",
-            "img": "https://cdn-istatic.herokuapp.com/static/imgs/chill/7.jpg",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/14.jpg",
             "title": "maybe you like it",
             "description": "this list was random generated",
             "length": 0,
             "totalDuration": 0
         },
         "key": "eIc4mqyN1Q8-ii-pme85fbrw5c-ii-opTv2TIE1dA-ii-SRT6DO1Vq1E-ii-N4w5jQx7SAs-ii-bfn9i5K2P6k-ii-_byvH0SV5wI-ii-OeNaeQnkwoc-ii-NdJH0i_nNNk-ii-jZ8yl0uCupQ-ii-gv_9y2fbT2I-ii-HtfEBKzSK0I-ii-h3h035Eyz5A-ii-SUE-UXmMaug-ii-asRwxJntJp8-ii-WdhQrpd79ds-ii-sE8pN-GTbA8"
+    },{
+        "infors": {
+            "playlistId": "tyykgkfxcxbsin-rm",
+            "img": "https://cdn-istatics.herokuapp.com/static/imgs/chill/12.jpg",
+            "title": "fly",
+            "description": "this list was random generated",
+            "length": 0,
+            "totalDuration": 0
+        },
+        "key": "CBsSxelr5Wk-ii-bZ7E7a_FbZI-ii-SRT6DO1Vq1E-ii-VQspRB0ztMw-ii-y2QWzytQ2Fg-ii-R266D9pRvU8-ii-G0sM7Wu_-Tk-ii-LpAhGNIeptI-ii-YK7cOz13wMQ-ii-GRKzbsvPQQU-ii-ReBvVhPeSd0-ii-wHMrTu2xios-ii-TfkP5ubz1z4-ii-8yGKJl_U4Gg-ii-0aqS_Lo0rjs-ii-1YjnXXxswhY-ii-pu2V7GHn4jQ-ii-KFof8aaUvGY-ii-HJrKVYJdABc-ii-1ImFBb3DkWA"
     }
 ]

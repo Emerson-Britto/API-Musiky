@@ -1,11 +1,9 @@
 let path = require('path');
 
-const devENV = false;
+const urlBase = process.env.DEV_ENV 
+    ? `http://localhost:${9872}/`
+    : 'https://cdn-istatics.herokuapp.com/'
 
-const apiUrl = 'https://api-musiky.herokuapp.com';
-const local_API = 'http://localhost:9877';
-
-let envAPI = devENV ? local_API : apiUrl;
 
 const getTime = () => {
     return new Date().getHours();
@@ -31,7 +29,7 @@ const greeting = () => {
 
     obj = {
         'greetingText': greetingText,
-        'greetingImg': `${envAPI}/msk/files/img?path=${filePath}`
+        'greetingImg': `${urlBase}/static/imgs/${filePath}`
     }
 
     return obj
