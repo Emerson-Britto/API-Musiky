@@ -1,7 +1,8 @@
-const router = require('express').Router()
+const router = require('express').Router();
 
-const randomPlaylists = require('./randomPlaylist.js')
-const randomSongs = require('./randomSongs.js')
+const randomPlaylists = require('./randomPlaylist.js');
+const randomSongs = require('./randomSongs.js');
+const randomArtists = require('./randomArtists.js');
 
 
 router.options('/', (req, res) => {
@@ -14,11 +15,13 @@ router.options('/', (req, res) => {
 
 router.get('/playlists', async (req, res) => {
 
-    const resultSongs = await randomPlaylists(req.query)
-
-    res.json(resultSongs)
+    res.json(await randomPlaylists(req.query))
 })
 
+router.get('/artists', async (req, res) => {
+
+    res.json(await randomArtists(req.query))
+})
 
 router.get('/songs', async (req, res) => {
 

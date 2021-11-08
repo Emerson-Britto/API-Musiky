@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const searchSuggestions = require('./suggestions.js')
 const autoComplete = require('./autoComplete.js')
+const search = require('./search.js')
 
 
 router.options('/', (req, res) => {
@@ -10,7 +11,6 @@ router.options('/', (req, res) => {
     res.status(200)
     res.end()
 })
-
 
 router.get('/search-suggestions', async (req, res) => {
     const total = req.query.total
@@ -29,5 +29,11 @@ router.get('/auto-complete', async (req, res) => {
 
     res.json(result)
 })
+
+router.get('/:input', async (req, res) => {
+
+    res.json(await search(req.params));
+})
+
 
 module.exports = router
