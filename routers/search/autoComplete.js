@@ -7,7 +7,8 @@ const urlBase = process.env.DEV_ENV
 
 const request = async(name, params='') => {
     let path = {
-        'allMusicNames': 'music/all'
+        'allMusicNames': 'music/all',
+        'allArtistNames': 'artist/allNames'
     }
     let { data } = await axios.get(`${urlBase + path[name] + '?' + params}`);
     return data
@@ -15,7 +16,8 @@ const request = async(name, params='') => {
 
 const autoComplete = async(value, maxResult=10) => {
 
-    let { items } = await request('allMusicNames', 'names=1&artists=1&maxResult=5000')
+    let { items } = await request('allMusicNames', 'names=1&maxResult=5000');
+    let { names } = await request('allArtistNames');
 
     var selected = [];
 
@@ -24,10 +26,16 @@ const autoComplete = async(value, maxResult=10) => {
 
             var exp = new RegExp(value, "i");
             var item = items[i];
+            var name = names[i];
  
-            let hasSomeEvenArtist = selected.some(value => value === item);
-            if (exp.test(item) && !hasSomeEvenArtist) {
-                selected.push(item);
+            let hasSomeEvenMusic = selected.some(value => value === item);
+            if (exp.test(item) && !hasSomeEvenMusic) {
+                selected.push(item.replace(/^ /g, ''));
+            }
+
+            let hasSomeEvenArtist = selected.some(value => value === name);
+            if (exp.test(name) && !hasSomeEvenArtist) {
+                selected.push(name);
             }
 
             if(selected.length >= maxResult) return selected
