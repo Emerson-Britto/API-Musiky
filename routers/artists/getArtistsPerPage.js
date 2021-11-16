@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-const playlistsJson = require('../../dataBase/playlists/random.json');
 
 const urlBase = process.env.DEV_ENV 
     ? `http://localhost:${9872}/`

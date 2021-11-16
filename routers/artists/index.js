@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const getArtistsPerPage = require('./getArtistsPerPage.js');
+const artistData = require('./artistData.js');
 
 router.options('/', (req, res) => {
     res.set('Access-Control-Allow-Methods', 'GET')
@@ -10,12 +11,20 @@ router.options('/', (req, res) => {
 })
 
 
-router.get('/getArtistsPerPage/', async (req, res) => {
+router.get('/getArtistsPerPage', async (req, res) => {
 
-    const playlist = await getArtistsPerPage(req.query)
+    const artistsPage = await getArtistsPerPage(req.query)
 
-    res.json(playlist)
+    res.json(artistsPage)
 })
+
+router.get('/:id', async (req, res) => {
+
+    const data = await artistData(req.params)
+
+    res.json(data)
+})
+
 
 
 module.exports = router
