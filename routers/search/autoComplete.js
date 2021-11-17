@@ -1,22 +1,9 @@
-const axios = require('axios');
+const { request } = require('../../external/api');
 
-const urlBase = process.env.DEV_ENV 
-    ? `http://localhost:${9872}/`
-    : 'https://cdn-istatics.herokuapp.com/'
-
-
-const request = async(name, params='') => {
-    let path = {
-        'allMusicNames': 'music/all',
-        'allArtistNames': 'artist/allNames'
-    }
-    let { data } = await axios.get(`${urlBase + path[name] + '?' + params}`);
-    return data
-}
 
 const autoComplete = async(value, maxResult=10) => {
 
-    let { items } = await request('allMusicNames', 'names=1&maxResult=5000');
+    let { items } = await request('allMusics', '?allNames=1&maxResult=5000');
     let { names } = await request('allArtistNames');
 
     var selected = [];

@@ -1,22 +1,9 @@
-const axios = require('axios');
+const { request } = require('../../external/api');
 
-
-const urlBase = process.env.DEV_ENV 
-    ? `http://localhost:${9872}/`
-    : 'https://cdn-istatics.herokuapp.com/'
-
-
-const request = async(name, params='') => {
-    let type = {
-        'allArtistsNames': 'artist/allNames'
-    }
-    let { data } = await axios.get(`${urlBase + type[name] + params}`);
-    return data
-}
 
 const generateSuggestions = async(total) => {
 
-    let { names } = await request('allArtistsNames')
+    let { names } = await request('allArtistNames')
 
     var suggestionsList = [];
 

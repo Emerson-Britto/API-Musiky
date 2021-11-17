@@ -1,20 +1,5 @@
 const faker = require('faker');
-const axios = require('axios');
 
-const urlBase = process.env.DEV_ENV 
-    ? `http://localhost:${9872}/`
-    : 'https://cdn-istatics.herokuapp.com/'
-
-
-const request = async(name, params='') => {
-    let type = {
-        artistsNames: 'artist/',
-        musics: 'music/all'
-    }
-
-    let { data } = await axios.get(`${urlBase + type[name] + params}`);
-    return data
-}
 
 const search = async({ input }) => {
 
@@ -29,13 +14,13 @@ const search = async({ input }) => {
 
 	input = input.replace(/\W/g, ' ');
 
-	const { items=null } = await request('artistsNames', input);
+	const { items=null } = await request('artist', input);
 
     if(items){
         res.searchTop = items[0];
         res.artists = items;
 
-        let resAPi = await request('musics', `?includesArtist=${res.searchTop.name}&maxResult=9999`);
+        let resAPi = await request('allMusics', `?withArtist=${res.searchTop.name}&maxResult=9999`);
 
         res.musics = resAPi.items;
     }

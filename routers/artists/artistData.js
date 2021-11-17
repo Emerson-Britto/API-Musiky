@@ -1,21 +1,6 @@
-const axios = require('axios');
 const faker = require('faker');
+const { request } = require('../../external/api');
 
-
-const urlBase = process.env.DEV_ENV 
-    ? `http://localhost:${9872}/`
-    : 'https://cdn-istatics.herokuapp.com/'
-
-
-const request = async(name, params='') => {
-    let type = {
-        artistsNames: 'artist/',
-        musics: 'music/all',
-        allPlaylist: 'playlist/all',
-    }
-    let { data } = await axios.get(`${urlBase + type[name] + params}`);
-    return data
-}
 
 const artistData = async({ id }) => {
 
@@ -30,13 +15,13 @@ const artistData = async({ id }) => {
 
     res.name = id.replace(/\W/g, ' ');
 
-    const { items=null } = await request('artistsNames', res.name);
+    const { items=null } = await request('artist', res.name, err => console.log(err));
 
     if(items.length){
 
         res.artistData = items[0];
 
-        let resAPi = await request('musics', `?includesArtist=${res.name}&maxResult=9999`);
+        let resAPi = await request('allMusics', `?withArtist=${res.name}&maxResult=9999`);
         res.musics = resAPi.items;
     }
 

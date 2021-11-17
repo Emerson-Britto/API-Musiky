@@ -1,19 +1,6 @@
-const axios = require('axios');
-const faker = require('faker')
+const faker = require('faker');
+const { request } = require('../../external/api');
 
-const urlBase = process.env.DEV_ENV 
-    ? `http://localhost:${9872}/`
-    : 'https://cdn-istatics.herokuapp.com/'
-
-
-const request = async(name, params='') => {
-    let type = {
-        allNames: 'artist/getByIndex/'
-    }
-
-    let { data } = await axios.get(`${urlBase + type[name] + params}`);
-    return data
-}
 
 const randomArtists = async({ maxResult=6 }) => {
 
@@ -25,7 +12,8 @@ const randomArtists = async({ maxResult=6 }) => {
     };
 
     while(res.artists.length < parseInt(maxResult)){
-        let { indexContent } = await request('allNames', ~~(Math.random() * 200));
+        let randomNum = ~~(Math.random() * 200);
+        let { indexContent } = await request('artistPerIndex', `?index=${randomNum}`);
         res.artists.push(indexContent);
     }
 

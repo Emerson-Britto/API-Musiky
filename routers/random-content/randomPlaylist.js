@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 const playlistsJson = require('../../dataBase/playlists/random.json');
 
 
