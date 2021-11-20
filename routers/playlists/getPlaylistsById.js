@@ -3,17 +3,7 @@ const { request } = require('../../external/api');
 
 const getPlaylistsById = async({ id }) => {
 
-    let res = {
-        resquestId: null,
-        infors: null,
-        list: []
-    }
-
-    let { infors, list, resquestId } = await request('playlistById', `?id=${id}`);
-
-    res.infors = infors;
-    res.list = list;
-    res.resquestId = resquestId;
+    let res = await request('playlistById', `?id=${id}`);
 
     return res;
 }
