@@ -1,4 +1,4 @@
-const playlistsJson = require('../../dataBase/playlists/random.json');
+const { request } = require('../../external/api');
 
 
 const randomPlaylists = async({ totalList }) => {
@@ -9,24 +9,10 @@ const randomPlaylists = async({ totalList }) => {
         length: 0
     };
 
-    let evenAdded = [];
+    let lists = await request('allPlaylist', `?random=1&maxResult=${totalList}`);
+    playlists.items = lists.items;
 
-    while(playlists.items.length !== parseInt(totalList)){
-
-        let numRandom = ~~(Math.random() * playlistsJson.length -1);
-
-        let list = playlistsJson[numRandom];
-
-        let hasSome = evenAdded.some(value => value === numRandom);
-
-        if(!hasSome && list.key){
-            list.infors.length = list.key.split('-ii-').length;
-            evenAdded.push(numRandom);
-            playlists.items.push(list);
-        }
-    }
-
-    playlists.length = playlists.items.length;
+    playlists.length = lists.itemsLength;
 
     return playlists;
 }

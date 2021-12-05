@@ -7,7 +7,7 @@ const BASE_URL = LOCAL_REQUEST
 
 
 const onError = err => {
-    console.log(err);
+    console.error(err);
 }
 
 
