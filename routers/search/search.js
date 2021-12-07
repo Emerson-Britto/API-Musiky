@@ -1,4 +1,5 @@
 const faker = require('faker');
+const { request } = require('../../external/api');
 
 
 const search = async({ input }) => {
