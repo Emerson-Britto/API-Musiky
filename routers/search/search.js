@@ -13,15 +13,19 @@ const search = async({ input }) => {
         musics: []
     };
 
-	input = input.replace(/\W/g, ' ');
+    input = input.replace(/\W|_/g, ' ');
 
 	const { items=null } = await request('artist', input);
+
+    console.log({items});
 
     if(items){
         res.searchTop = items[0];
         res.artists = items;
 
-        let resAPi = await request('allMusics', `?withArtist=${res.searchTop.name}&maxResult=9999`);
+        let resAPi = await request('allMusics', `?withArtist=${items[0].name.replace(/\W|_/g, ' ')}&maxResult=9999`);
+
+        console.log({resAPi});
 
         res.musics = resAPi.items;
     }

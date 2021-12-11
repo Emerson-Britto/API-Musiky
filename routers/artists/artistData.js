@@ -13,7 +13,7 @@ const artistData = async({ id }) => {
         musics: []
     };
 
-    res.name = id.replace(/\W/g, ' ');
+    res.name = id.replace(/\W|_/g, ' ');
 
     const { items=null } = await request('artist', res.name, err => console.log(err));
 
@@ -25,7 +25,7 @@ const artistData = async({ id }) => {
         res.musics = resAPi.items;
     }
 
-    let list = await request('allPlaylist', `?withArtist=${id}`);
+    let list = await request('allPlaylist', `?withArtist=${res.name}`);
     res.playlists = list.items;
 
     return res;
