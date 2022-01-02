@@ -40,21 +40,20 @@ app.use('/search', searchRouter);
 const artistsRouter = require('./routers/artists');
 app.use('/artist', artistsRouter);
 
+const pages = require('./routers/pages');
+app.use('/page', pages);
+
 const greeting = require('./routers/greeting.js');
 app.get('/greeting', async (req, res) => {
-
-    const result = await greeting();
-
-    res.json(result);
+    res.json(await greeting());
 });
 
 
-const devConsole = () => {
-
+const log = () => {
     console.log('Started: ' + new Date());
-    if(devENV) console.log(`root: http://localhost:${PORT}/`);
+    if(devENV) console.log(`local: http://localhost:${PORT}/`);
 }
 
-app.listen(PORT, devConsole());
+app.listen(PORT, log());
 
 //https://api-musiky.herokuapp.com/createjson?source=[PLAYLIST_LINK]&key=[KEY]
