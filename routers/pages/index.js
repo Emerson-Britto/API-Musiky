@@ -1,4 +1,10 @@
-const router = require('express').Router()
+const router = require('express').Router();
+
+const randomPlaylist = require('../random-content/randomPlaylist');
+const randomArtists = require('../random-content/randomArtists');
+const getPlaylistsById = require('../playlists/getPlaylistsById');
+const randomSongs = require('../random-content/randomSongs');
+const generateSuggestions = require('../search/suggestions');
 
 router.options('/', (req, res) => {
     res.set('Access-Control-Allow-Methods', 'GET')
@@ -7,11 +13,7 @@ router.options('/', (req, res) => {
     res.end()
 })
 
-router.get('/home', async (req, res) => {
-    const randomPlaylist = require('../random-content/randomPlaylist');
-    const randomArtists = require('../random-content/randomArtists');
-    const getPlaylistsById = require('../playlists/getPlaylistsById');
-
+router.get('/home', async(req, res) => {
     const $ = {};
     $.playlists = {};
 
@@ -30,9 +32,7 @@ router.get('/home', async (req, res) => {
     res.json($);
 });
 
-router.get('/explore', async (req, res) => {
-    const randomPlaylist = require('../random-content/randomPlaylist');
-    const randomSongs = require('../random-content/randomSongs');
+router.get('/explore', async(req, res) => {
     const $ = {};
     $.playlists = {};
 
@@ -44,6 +44,16 @@ router.get('/explore', async (req, res) => {
     res.json($);
 });
 
+router.get('/search', async(req, res) => {
+    const $ = {};
+    $.playlists = {};
+
+    $.searchSuggestions = await generateSuggestions({ total: 11 });
+    $.playlists.othersLists = await randomPlaylist({ totalList: 6 }).then(r=>r.items);
+    $.artists = await randomArtists({ maxResult: 6 }).then(r=>r.artists);
+
+    res.json($);
+});
 
 
 module.exports = router

@@ -1,7 +1,7 @@
 const { request } = require('../../external/api');
 
 
-const generateSuggestions = async(total) => {
+const generateSuggestions = async({ total }) => {
 
     let { names } = await request('allArtistNames')
 
