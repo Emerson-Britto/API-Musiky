@@ -20,10 +20,10 @@ router.get('/home', async(req, res) => {
     let playlists = await randomPlaylist({ totalList: 1 });
     let firstPlaylistId = playlists.items[0].id;
     let quickpicksPlaylist = await getPlaylistsById({ id : firstPlaylistId });
-    quickpicksPlaylist.list.length = 10;
+    quickpicksPlaylist.list = quickpicksPlaylist.list.splice(0, 10);
 
     $.greeting = require('../greeting')();
-    $.quickPicks = quickpicksPlaylist;// temp
+    $.quickPicks = quickpicksPlaylist; // temp
     $.playlists.mixs = await randomPlaylist({ totalList: 6 }).then(r=>r.items);
     $.artists = await randomArtists({ maxResult: 6 }).then(r=>r.artists);
     $.playlists.otherMixs = await randomPlaylist({ totalList: 6 }).then(r=>r.items);

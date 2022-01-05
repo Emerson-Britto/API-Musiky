@@ -10,7 +10,8 @@ const getTime = () => {
 }
 
 const greeting = () => {
-    var time = getTime() - 3
+    let time = getTime();
+    if(!process.env.DEV_ENV) time = time -3;
     if(time < 0){time = time + 24}
 
     const period = [
