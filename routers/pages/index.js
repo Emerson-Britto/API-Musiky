@@ -5,6 +5,8 @@ const randomArtists = require('../random-content/randomArtists');
 const getPlaylistsById = require('../playlists/getPlaylistsById');
 const randomSongs = require('../random-content/randomSongs');
 const generateSuggestions = require('../search/suggestions');
+const recommendations = require('../recommendations');
+
 
 router.options('/', (req, res) => {
     res.set('Access-Control-Allow-Methods', 'GET')
@@ -21,6 +23,7 @@ router.get('/home', async(req, res) => {
     let firstPlaylistId = playlists.items[0].id;
 
     $.greeting = require('../greeting')();
+    $.recommendations = await recommendations();
     $.quickPicks = await randomPlaylist({ totalList: 10, category: 'random' });
     $.playlists.mixs = await randomPlaylist({ totalList: 6 }).then(r=>r.items);
     $.artists = await randomArtists({ maxResult: 6 }).then(r=>r.artists);

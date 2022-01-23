@@ -16,7 +16,6 @@ const randomPlaylists = async({ totalList, category='all' }) => {
         `?random=1&categoryInput=${category}&maxResult=${totalList}`
     );
     playlists.items = lists.items;
-
     playlists.length = lists.itemsLength;
 
     return playlists;
