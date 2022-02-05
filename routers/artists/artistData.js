@@ -13,19 +13,20 @@ const artistData = async({ id }) => {
         musics: []
     };
 
-    res.name = id.replace(/\W|_/g, ' ');
-
-    const { items=null } = await request('artist', res.name, err => console.log(err));
+    const { items=null } = await request(
+        'artist',
+        `${id}?type=name`
+    );
 
     if(items.length){
 
         res.artistData = items[0];
 
-        let resAPi = await request('allMusics', `?withArtist=${res.name}&maxResult=9999`);
+        let resAPi = await request('allMusics', `?withArtist=${id}&maxResult=9999`);
         res.musics = resAPi.items;
     }
 
-    let list = await request('allPlaylist', `?withArtist=${res.name}`);
+    let list = await request('allPlaylist', `?withArtist=${id}`);
     res.playlists = list.items;
 
     return res;

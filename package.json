@@ -8,10 +8,12 @@
     "faker": "5.5.3",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
+    "nodemon": "^2.0.15",
     "sequelize": "^6.6.5",
     "ytdl-core": "^4.9.1"
   },
   "scripts": {
-    "start": "node app"
+    "nodemon": "nodemon",
+    "start": "nodemon -x 'node app || (sleep 5; touch app.js)'"
   }
 }

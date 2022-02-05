@@ -6,7 +6,7 @@ const recommendations = async() => {
 	let noVocals = await getPlaylistsById({ id: 'PLrQmjsgFFZHi2KZhTy8717zlVnSi6Jiat' });
 	let officialVideos = await getPlaylistsById({ id: 'PLrQmjsgFFZHiLLcr1cKedzZVBMnujZQEE' });
 	let song = noVocals.list[~~(Math.random() * noVocals.list.length - 1)];
-	let data = await artistData({ id: song.artists[0].replace(/ /gi, '-') });
+	let data = await artistData({ id: song.artists[0].replace(/\W|_/gi, '') });
 	let tragetTitle = new RegExp(song.title, 'i');
 	let tragetArtist = new RegExp(song.artists[0], 'i');
 	let clip = officialVideos.list.find(vid => {
