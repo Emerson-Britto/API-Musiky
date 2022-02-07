@@ -27,11 +27,9 @@ const request = (pathName, params='', callbackError=onError) => {
     let PATH = paths[pathName] ? paths[pathName] : pathName;
     let URL = `${BASE_URL + PATH + params}`;
 
-    return axios.get(URL).then(res => {
-
-        return res.data
-
-    }).catch(err => callbackError(err))
+    return axios.get(URL)
+        .then(res => res.data)
+        .catch(err => callbackError(err))
 }
 
 module.exports = { BASE_URL, request }
