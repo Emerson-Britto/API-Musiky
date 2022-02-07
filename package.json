@@ -14,6 +14,7 @@
   },
   "scripts": {
     "nodemon": "nodemon",
-    "start": "nodemon -x 'node app || (sleep 5; touch app.js)'"
+    "watch": "nodemon -x 'node app || (sleep 5; touch app.js)'",
+    "start": "node app"
   }
 }
